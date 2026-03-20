@@ -71,15 +71,7 @@
             <button class="btn btn-outline-danger btn-sm" id="clearCartBtn" onclick="clearCart()">Clear Cart</button>
         </div>
     </div>
-
-The pop-up is likely not appearing because your JavaScript is trying to find the modal-body to "inject" a disclaimer, but your HTML already has a disclaimer inside it. This conflict—along with potential errors if Bootstrap hasn't loaded yet—is stopping the script.
-
-To fix this, we will remove the "injection" logic from the JS (since it's now in your HTML) and ensure the script is clean.
-
-1. The Fixed HTML (index.html)
-Ensure your modal has the correct id="ageModal" and the buttons have the correct onclick functions.
-
-HTML
+    
 <div class="modal fade" id="ageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
