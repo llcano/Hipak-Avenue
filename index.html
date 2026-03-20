@@ -72,15 +72,37 @@
         </div>
     </div>
 
+The pop-up is likely not appearing because your JavaScript is trying to find the modal-body to "inject" a disclaimer, but your HTML already has a disclaimer inside it. This conflict—along with potential errors if Bootstrap hasn't loaded yet—is stopping the script.
+
+To fix this, we will remove the "injection" logic from the JS (since it's now in your HTML) and ensure the script is clean.
+
+1. The Fixed HTML (index.html)
+Ensure your modal has the correct id="ageModal" and the buttons have the correct onclick functions.
+
+HTML
 <div class="modal fade" id="ageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center p-4">
-            <h3 class="fw-bold">Age Verification</h3>
-            <p>You must be 18 years or older to enter this site.</p>
-            <div class="d-grid gap-2">
-                <button class="btn btn-dark btn-lg" onclick="confirmAge()">I am 18 or older</button>
-                
-                <button class="btn btn-link text-muted" onclick="redirectUnderage()">I am underage</button>
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h3>Age Verification</h3>
+                <p>You must be at least 18 years old to enter this site.</p>
+
+                <div class="vape-warning-container" style="display: flex; align-items: center; background-color: #fffafa; border: 2px solid #b22222; border-radius: 4px; padding: 8px; margin-top: 20px; gap: 10px;">
+                    <div class="stop-icon" style="width: 35px; height: 35px; flex-shrink: 0;">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 12L12 22L22 12L12 2Z" fill="#B22222" stroke="#000" stroke-width="2"/>
+                            <text x="50%" y="65%" text-anchor="middle" fill="white" font-size="8px" font-family="Arial" font-weight="bold">STOP</text>
+                        </svg>
+                    </div>
+                    <div class="warning-content" style="font-size: 10px; color: #000; text-align: left; text-transform: uppercase; line-height: 1.2; font-weight: 700;">
+                        <strong>WARNING:</strong> This product contains nicotine. 
+                        Nicotine is an addictive chemical. Consume responsibly.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-primary" onclick="confirmAge()">I am 18+</button>
+                <button type="button" class="btn btn-secondary" onclick="redirectUnderage()">Under 18 | Exit</button>
             </div>
         </div>
     </div>
@@ -133,6 +155,6 @@
 <div class="bottom-right-footer">
     &copy; 2026 Love Lyn Cano
 </div>
-    
+
 </body>
 </html>
