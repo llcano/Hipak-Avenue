@@ -243,7 +243,7 @@ function createProductCard(p) {
 function renderHome() {
     const marquee = document.getElementById('new-arrivals-marquee');
     if(marquee && marquee.children.length === 0) {
-        // Slice to 5 items to keep the 'huge space' aesthetic and avoid crowding
+        
         const carouselPool = products.filter(p => p.category === 'new').slice(0, 5);
         
         const arrivalImages = carouselPool
@@ -268,8 +268,6 @@ function toggleCheckoutFields() {
     const paymentMethod = document.getElementById('paymentMethod').value;
     const lang = document.getElementById('langSwitch').value;
     const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-
-    // Toggle Address vs Pickup Info
     const addressSection = document.getElementById('addressSection');
     const pickupSection = document.getElementById('pickupSection');
     
@@ -280,8 +278,7 @@ function toggleCheckoutFields() {
         addressSection.classList.remove('d-none');
         pickupSection.classList.add('d-none');
     }
-
-    // Handle Gcash Instructions
+    
     const gbox = document.getElementById('gcashInstructions');
     if (paymentMethod === "Gcash") {
         gbox.classList.remove('d-none');
@@ -298,37 +295,30 @@ function validateAndPlaceOrder() {
     const address = document.getElementById('custAddress')?.value.trim();
     const lang = document.getElementById('langSwitch').value;
     
-    // 1. Validation for Name and Philippine Phone Format
     if (!name || !/^09\d{9}$/.test(phone)) {
         return alert(lang === 'en' ? "Please check your Name and Phone (09xxxxxxxxx)" : "Pakisuri ang Pangalan at Phone (09xxxxxxxxx)");
     }
 
-    // 2. Generate a random Order ID (e.g., #VP-83291)
     const orderId = "VP-" + Math.floor(10000 + Math.random() * 90000);
 
-    // 3. Display Success Message
     const thankYouMsg = lang === 'en' 
         ? `Thank you for your purchase, ${name}!\nYour Order ID is: #${orderId}`
         : `Salamat sa iyong pagbili, ${name}!\nAng iyong Order ID ay: #${orderId}`;
     
     alert(thankYouMsg);
 
-    // 4. Clear the Cart Data
     cart = []; 
     localStorage.removeItem('vape_cart'); 
     updateCartUI(); 
     closeCart();
 
-    // 5. Clear / Reset All Form Fields
     document.getElementById('custName').value = "";
     document.getElementById('custPhone').value = "";
     if (document.getElementById('custAddress')) document.getElementById('custAddress').value = "";
     
-    // Reset radio buttons to default (Delivery)
     document.getElementById('typeDelivery').checked = true;
     toggleCheckoutFields();
 
-    // 6. Close the Modal
     const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
     if (checkoutModal) checkoutModal.hide();
 }
