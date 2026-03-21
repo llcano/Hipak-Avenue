@@ -352,3 +352,14 @@ function validateAndPlaceOrder() {
     const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
     if (checkoutModal) checkoutModal.hide();
 }
+
+document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the page from refreshing
+
+    // Show the Bootstrap Modal
+    const thankYouModal = new bootstrap.Modal(document.getElementById('thankYouModal'));
+    thankYouModal.show();
+
+    // Optional: Clear the form after submission
+    this.reset();
+});
