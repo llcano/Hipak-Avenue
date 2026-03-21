@@ -339,18 +339,30 @@ function validateAndPlaceOrder() {
     updateCartUI(); 
     closeCart();
 
-    // 5. Clear / Reset All Form Fields
-    document.getElementById('custName').value = "";
-    document.getElementById('custPhone').value = "";
-    if (document.getElementById('custAddress')) document.getElementById('custAddress').value = "";
-    
-    // Reset radio buttons to default (Delivery)
-    document.getElementById('typeDelivery').checked = true;
-    toggleCheckoutFields();
+// 5. Clear / Reset All Form Fields
+document.getElementById('custName').value = "";
+document.getElementById('custPhone').value = "";
+if (document.getElementById('custAddress')) {
+    document.getElementById('custAddress').value = "";
+}
 
-    // 6. Close the Modal
-    const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
-    if (checkoutModal) checkoutModal.hide();
+// FIX: Use 'optDelivery' instead of 'typeDelivery'
+const deliveryBtn = document.getElementById('optDelivery');
+if (deliveryBtn) {
+    deliveryBtn.checked = true;
+}
+toggleCheckoutFields();
+
+// 6. Close the Modal
+const modalElement = document.getElementById('checkoutModal');
+const checkoutModal = bootstrap.Modal.getInstance(modalElement);
+
+if (checkoutModal) {
+    checkoutModal.hide();
+} else {
+    // Fallback if instance wasn't found
+    new bootstrap.Modal(modalElement).hide();
+}
 }
 
 document.getElementById('contactForm').addEventListener('submit', function(event) {
